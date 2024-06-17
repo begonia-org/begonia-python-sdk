@@ -147,12 +147,14 @@ class MakeBucketResponse(_message.Message):
     def __init__(self) -> None: ...
 
 class UploadFileResponse(_message.Message):
-    __slots__ = ("uri", "version")
+    __slots__ = ("uri", "version", "uid")
     URI_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
+    UID_FIELD_NUMBER: _ClassVar[int]
     uri: str
     version: str
-    def __init__(self, uri: _Optional[str] = ..., version: _Optional[str] = ...) -> None: ...
+    uid: str
+    def __init__(self, uri: _Optional[str] = ..., version: _Optional[str] = ..., uid: _Optional[str] = ...) -> None: ...
 
 class CompleteMultipartUploadRequest(_message.Message):
     __slots__ = ("upload_id", "key", "content_type", "sha256", "use_version", "bucket", "engine")
@@ -173,14 +175,16 @@ class CompleteMultipartUploadRequest(_message.Message):
     def __init__(self, upload_id: _Optional[str] = ..., key: _Optional[str] = ..., content_type: _Optional[str] = ..., sha256: _Optional[str] = ..., use_version: bool = ..., bucket: _Optional[str] = ..., engine: _Optional[str] = ...) -> None: ...
 
 class CompleteMultipartUploadResponse(_message.Message):
-    __slots__ = ("uri", "sha256", "version")
+    __slots__ = ("uri", "sha256", "version", "uid")
     URI_FIELD_NUMBER: _ClassVar[int]
     SHA256_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
+    UID_FIELD_NUMBER: _ClassVar[int]
     uri: str
     sha256: str
     version: str
-    def __init__(self, uri: _Optional[str] = ..., sha256: _Optional[str] = ..., version: _Optional[str] = ...) -> None: ...
+    uid: str
+    def __init__(self, uri: _Optional[str] = ..., sha256: _Optional[str] = ..., version: _Optional[str] = ..., uid: _Optional[str] = ...) -> None: ...
 
 class AbortMultipartUploadRequest(_message.Message):
     __slots__ = ("upload_id", "engine")
@@ -203,16 +207,18 @@ class UploadAPIResponse(_message.Message):
     def __init__(self, uri: _Optional[str] = ..., sha256: _Optional[str] = ...) -> None: ...
 
 class DownloadRequest(_message.Message):
-    __slots__ = ("key", "version", "bucket", "engine")
+    __slots__ = ("key", "version", "bucket", "engine", "file_id")
     KEY_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     BUCKET_FIELD_NUMBER: _ClassVar[int]
     ENGINE_FIELD_NUMBER: _ClassVar[int]
+    FILE_ID_FIELD_NUMBER: _ClassVar[int]
     key: str
     version: str
     bucket: str
     engine: str
-    def __init__(self, key: _Optional[str] = ..., version: _Optional[str] = ..., bucket: _Optional[str] = ..., engine: _Optional[str] = ...) -> None: ...
+    file_id: str
+    def __init__(self, key: _Optional[str] = ..., version: _Optional[str] = ..., bucket: _Optional[str] = ..., engine: _Optional[str] = ..., file_id: _Optional[str] = ...) -> None: ...
 
 class DownloadResponse(_message.Message):
     __slots__ = ("content", "part_number")
@@ -223,35 +229,39 @@ class DownloadResponse(_message.Message):
     def __init__(self, content: _Optional[bytes] = ..., part_number: _Optional[int] = ...) -> None: ...
 
 class DeleteRequest(_message.Message):
-    __slots__ = ("key", "version", "bucket", "engine")
+    __slots__ = ("key", "version", "bucket", "engine", "file_id")
     KEY_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     BUCKET_FIELD_NUMBER: _ClassVar[int]
     ENGINE_FIELD_NUMBER: _ClassVar[int]
+    FILE_ID_FIELD_NUMBER: _ClassVar[int]
     key: str
     version: str
     bucket: str
     engine: str
-    def __init__(self, key: _Optional[str] = ..., version: _Optional[str] = ..., bucket: _Optional[str] = ..., engine: _Optional[str] = ...) -> None: ...
+    file_id: str
+    def __init__(self, key: _Optional[str] = ..., version: _Optional[str] = ..., bucket: _Optional[str] = ..., engine: _Optional[str] = ..., file_id: _Optional[str] = ...) -> None: ...
 
 class DeleteResponse(_message.Message):
     __slots__ = ()
     def __init__(self) -> None: ...
 
 class FileMetadataRequest(_message.Message):
-    __slots__ = ("key", "version", "bucket", "engine")
+    __slots__ = ("key", "version", "bucket", "engine", "file_id")
     KEY_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     BUCKET_FIELD_NUMBER: _ClassVar[int]
     ENGINE_FIELD_NUMBER: _ClassVar[int]
+    FILE_ID_FIELD_NUMBER: _ClassVar[int]
     key: str
     version: str
     bucket: str
     engine: str
-    def __init__(self, key: _Optional[str] = ..., version: _Optional[str] = ..., bucket: _Optional[str] = ..., engine: _Optional[str] = ...) -> None: ...
+    file_id: str
+    def __init__(self, key: _Optional[str] = ..., version: _Optional[str] = ..., bucket: _Optional[str] = ..., engine: _Optional[str] = ..., file_id: _Optional[str] = ...) -> None: ...
 
 class FileMetadataResponse(_message.Message):
-    __slots__ = ("key", "size", "sha256", "content_type", "etag", "modify_time", "name", "version")
+    __slots__ = ("key", "size", "sha256", "content_type", "etag", "modify_time", "name", "version", "uid", "bucket")
     KEY_FIELD_NUMBER: _ClassVar[int]
     SIZE_FIELD_NUMBER: _ClassVar[int]
     SHA256_FIELD_NUMBER: _ClassVar[int]
@@ -260,6 +270,8 @@ class FileMetadataResponse(_message.Message):
     MODIFY_TIME_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
+    UID_FIELD_NUMBER: _ClassVar[int]
+    BUCKET_FIELD_NUMBER: _ClassVar[int]
     key: str
     size: int
     sha256: str
@@ -268,7 +280,9 @@ class FileMetadataResponse(_message.Message):
     modify_time: int
     name: str
     version: str
-    def __init__(self, key: _Optional[str] = ..., size: _Optional[int] = ..., sha256: _Optional[str] = ..., content_type: _Optional[str] = ..., etag: _Optional[str] = ..., modify_time: _Optional[int] = ..., name: _Optional[str] = ..., version: _Optional[str] = ...) -> None: ...
+    uid: str
+    bucket: str
+    def __init__(self, key: _Optional[str] = ..., size: _Optional[int] = ..., sha256: _Optional[str] = ..., content_type: _Optional[str] = ..., etag: _Optional[str] = ..., modify_time: _Optional[int] = ..., name: _Optional[str] = ..., version: _Optional[str] = ..., uid: _Optional[str] = ..., bucket: _Optional[str] = ...) -> None: ...
 
 class Files(_message.Message):
     __slots__ = ("ID", "uid", "key", "bucket", "engine", "is_deleted", "created_at", "updated_at", "owner", "update_mask")
