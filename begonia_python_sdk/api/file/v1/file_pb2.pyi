@@ -83,22 +83,20 @@ class UploadMultipartFileResponse(_message.Message):
     def __init__(self) -> None: ...
 
 class UploadFileRequest(_message.Message):
-    __slots__ = ("key", "content", "content_type", "sha256", "use_version", "bucket", "engine")
+    __slots__ = ("key", "content", "content_type", "sha256", "bucket", "engine")
     KEY_FIELD_NUMBER: _ClassVar[int]
     CONTENT_FIELD_NUMBER: _ClassVar[int]
     CONTENT_TYPE_FIELD_NUMBER: _ClassVar[int]
     SHA256_FIELD_NUMBER: _ClassVar[int]
-    USE_VERSION_FIELD_NUMBER: _ClassVar[int]
     BUCKET_FIELD_NUMBER: _ClassVar[int]
     ENGINE_FIELD_NUMBER: _ClassVar[int]
     key: str
     content: bytes
     content_type: str
     sha256: str
-    use_version: bool
     bucket: str
     engine: str
-    def __init__(self, key: _Optional[str] = ..., content: _Optional[bytes] = ..., content_type: _Optional[str] = ..., sha256: _Optional[str] = ..., use_version: bool = ..., bucket: _Optional[str] = ..., engine: _Optional[str] = ...) -> None: ...
+    def __init__(self, key: _Optional[str] = ..., content: _Optional[bytes] = ..., content_type: _Optional[str] = ..., sha256: _Optional[str] = ..., bucket: _Optional[str] = ..., engine: _Optional[str] = ...) -> None: ...
 
 class FileSystemEngine(_message.Message):
     __slots__ = ("name", "endpoint", "access_key", "secret_key")
@@ -131,16 +129,18 @@ class ListFilesResponse(_message.Message):
     def __init__(self, files: _Optional[_Iterable[_Union[Files, _Mapping]]] = ...) -> None: ...
 
 class MakeBucketRequest(_message.Message):
-    __slots__ = ("bucket", "Region", "object_locking", "engine")
+    __slots__ = ("bucket", "region", "object_locking", "engine", "enable_version")
     BUCKET_FIELD_NUMBER: _ClassVar[int]
     REGION_FIELD_NUMBER: _ClassVar[int]
     OBJECT_LOCKING_FIELD_NUMBER: _ClassVar[int]
     ENGINE_FIELD_NUMBER: _ClassVar[int]
+    ENABLE_VERSION_FIELD_NUMBER: _ClassVar[int]
     bucket: str
-    Region: str
+    region: str
     object_locking: bool
     engine: str
-    def __init__(self, bucket: _Optional[str] = ..., Region: _Optional[str] = ..., object_locking: bool = ..., engine: _Optional[str] = ...) -> None: ...
+    enable_version: bool
+    def __init__(self, bucket: _Optional[str] = ..., region: _Optional[str] = ..., object_locking: bool = ..., engine: _Optional[str] = ..., enable_version: bool = ...) -> None: ...
 
 class MakeBucketResponse(_message.Message):
     __slots__ = ()
@@ -157,22 +157,20 @@ class UploadFileResponse(_message.Message):
     def __init__(self, uri: _Optional[str] = ..., version: _Optional[str] = ..., uid: _Optional[str] = ...) -> None: ...
 
 class CompleteMultipartUploadRequest(_message.Message):
-    __slots__ = ("upload_id", "key", "content_type", "sha256", "use_version", "bucket", "engine")
+    __slots__ = ("upload_id", "key", "content_type", "sha256", "bucket", "engine")
     UPLOAD_ID_FIELD_NUMBER: _ClassVar[int]
     KEY_FIELD_NUMBER: _ClassVar[int]
     CONTENT_TYPE_FIELD_NUMBER: _ClassVar[int]
     SHA256_FIELD_NUMBER: _ClassVar[int]
-    USE_VERSION_FIELD_NUMBER: _ClassVar[int]
     BUCKET_FIELD_NUMBER: _ClassVar[int]
     ENGINE_FIELD_NUMBER: _ClassVar[int]
     upload_id: str
     key: str
     content_type: str
     sha256: str
-    use_version: bool
     bucket: str
     engine: str
-    def __init__(self, upload_id: _Optional[str] = ..., key: _Optional[str] = ..., content_type: _Optional[str] = ..., sha256: _Optional[str] = ..., use_version: bool = ..., bucket: _Optional[str] = ..., engine: _Optional[str] = ...) -> None: ...
+    def __init__(self, upload_id: _Optional[str] = ..., key: _Optional[str] = ..., content_type: _Optional[str] = ..., sha256: _Optional[str] = ..., bucket: _Optional[str] = ..., engine: _Optional[str] = ...) -> None: ...
 
 class CompleteMultipartUploadResponse(_message.Message):
     __slots__ = ("uri", "sha256", "version", "uid")
