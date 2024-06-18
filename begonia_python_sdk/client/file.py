@@ -47,13 +47,14 @@ class FileAPIGrpcClient:
 
     def get_file_stub(self) -> FileServiceStub:
         return self.file_stub
+
     def get_file(self, fid: str, read_request: ReadFileRequest = None) -> Tuple[FileDetails, io.BytesIO]:
         request = DownloadRequest(
             file_id=fid,
-            key=read_request.key,
-            version=read_request.version,
-            bucket=read_request.bucket,
-            engine=read_request.engine)
+            key=read_request.key if ReadFileRequest else None,
+            version=read_request.version if ReadFileRequest else None,
+            bucket=read_request.bucket if ReadFileRequest else None,
+            engine=read_request.engine if ReadFileRequest else None)
         req = new_gateway_request_from_grpc(request, self.file_stub.Download._method.decode("utf-8"), self.host)
         md: GatewayRequest = self.signer.sign_request(req)
         client_metadata = [(k, v) for k, v in md.headers.headers.items()]
@@ -73,8 +74,8 @@ class FileAPIGrpcClient:
 
 
 if __name__ == "__main__":
-    client = FileAPIGrpcClient("127.0.0.1", 12139, "6Yalu1yVFAq2bYhxEq7lT9CEGc24nMgh",
-                               "aF6z12wadvu0RfWhtEx3pCcqlUYN8IAPhbSa1rTfLDJ0SFaMaovLmXIq6ucksvPR")
-    file, data = client.get_file("", ReadFileRequest(engine=FILE_ENGINE_MINIO,
-                                 bucket="bucket-minio-biz-20240615020417", key="test.txt", version=""))
+    client = FileAPIGrpcClient("127.0.0.1", 12139, "RXS5ncjYwkJKEKKoTjdEagvp1iIIL4mD",
+                               "zdlWogPdYGp40ilDBoqoiUkqxeO89etGTbvKPsndsD3ddkhjHlpkkJUj1JprHIpO")
+    file, data = client.get_file(None, ReadFileRequest(engine=FILE_ENGINE_MINIO,
+                                 bucket="openkb", key="0500_石羊农科SRM_采购策略管理_操作手册_V1.0.pdf", version=""))
     print(file)

@@ -190,7 +190,7 @@ def new_gateway_request_from_grpc(message: Any, full_method: str, host: str,
                                   metadata: Tuple[Tuple[str, str]] = None) -> GatewayRequest:
     try:
         payload = b"{}"
-        payload = json.dumps(MessageToDict(message),separators=(',', ':')).encode()
+        payload = json.dumps(MessageToDict(message),separators=(',', ':'),ensure_ascii=False).encode()
         header = RequestHeader()
         if metadata:
             for k, v in metadata:
