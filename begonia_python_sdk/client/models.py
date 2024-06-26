@@ -20,3 +20,4 @@ class FileDetails(BaseModel):
     size: int
     version: str
     bucket: str
+    name: str

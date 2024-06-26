@@ -88,11 +88,12 @@ class FileAPIGrpcClient(BaseClient):
         sha256 = metadata.get(get_metadata_key("X-File-Sha256"), '')
         version = metadata.get(get_metadata_key("X-File-Version"), '')
         bucket = metadata.get(get_metadata_key("X-File-Bucket"), '')
+        name = metadata.get(get_metadata_key("X-File-Name"), '')
         content_type = response.content_type
         with open(dst, "wb") as f:
             f.write(response.data)
         return FileDetails(sha256=sha256, content_type=content_type, size=size,
-                           version=version, bucket=bucket)
+                           version=version, bucket=bucket,name=name)
 
     def metadata(self, fid: str, read_request: ReadFileRequest = None) -> FileDetails:
         request = FileMetadataRequest(
@@ -106,7 +107,7 @@ class FileAPIGrpcClient(BaseClient):
         response, _ = self.call(request, self.file_stub.Metadata)
 
         return FileDetails(sha256=response.version, content_type=response.content_type, size=response.size,
-                           version=response.version, bucket=response.bucket)
+                           version=response.version, bucket=response.bucket,name=response.name)
 
     def range_download(self, start: int, end: int, fid: str, read_request: ReadFileRequest = None) -> bytes:
         request = DownloadRequest(
@@ -136,7 +137,9 @@ class FileAPIGrpcClient(BaseClient):
             content_type=file.content_type,
             size=size,
             bucket=file.bucket,
-            version=file.version)
+            version=file.version,
+            name=file.name
+            )
         # response, server_metadata = self.call(request, self.file_stub.Download)
         # return response.data
 
@@ -146,3 +149,4 @@ if __name__ == "__main__":
                                "zdlWogPdYGp40ilDBoqoiUkqxeO89etGTbvKPsndsD3ddkhjHlpkkJUj1JprHIpO", FILE_ENGINE_MINIO)
     # file, data = client.get_file("458092175117258752", FILE_ENGINE_MINIO)
     file = client.get("458092175117258752", "example.pdf")
+    print(file)
