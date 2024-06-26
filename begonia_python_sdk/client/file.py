@@ -10,7 +10,7 @@ from curses import meta
 import io
 import hashlib
 import math
-from typing import Tuple
+from typing import Tuple, Union
 from urllib import response
 import grpc
 from google.api import httpbody_pb2 as httpbody
@@ -73,7 +73,19 @@ class FileAPIGrpcClient(BaseClient):
         if file.size > 16 * 1024 * 1024:
             return self.get_large_file(fid, dst, read_request)
         return self.get_file(fid, dst, read_request)
-
+    
+    def put_file(self, src: Union[str,bytes], bucket: str, key: str) -> str:
+        data = src
+        if isinstance(src, str):
+            with open(src, "rb") as f:
+                data = f.read()
+        hash_obj = hashlib.sha256()
+        hash_obj.update(data)
+        sha256 = hash_obj.hexdigest()
+        request = UploadFileRequest(key=key, content=data, sha256=sha256, bucket=bucket, engine=self.engine)
+        response,_ = self.call(request, self.file_stub.Upload)
+        return response.uri
+        
     def get_file(self, fid: str, dst: str, read_request: ReadFileRequest = None) -> FileDetails:
         request = DownloadRequest(
             file_id=fid,
@@ -150,3 +162,5 @@ if __name__ == "__main__":
     # file, data = client.get_file("458092175117258752", FILE_ENGINE_MINIO)
     file = client.get("458092175117258752", "example.pdf")
     print(file)
+    uri=client.put_file("example.pdf", "openkb", "example.pdf")
+    print(f"uri:{uri}")
