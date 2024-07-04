@@ -17,7 +17,8 @@ from google.api import httpbody_pb2 as httpbody
 from begonia_python_sdk.client.base import BaseClient
 from begonia_python_sdk.api.file.v1.file_pb2_grpc import FileServiceStub
 from begonia_python_sdk.api.file.v1.file_pb2 import DownloadRequest, \
-    DownloadResponse, UploadFileRequest, FileMetadataRequest, FileMetadataResponse
+    DownloadResponse, UploadFileRequest, FileMetadataRequest, FileMetadataResponse, \
+    MakeBucketRequest, MakeBucketResponse
 from begonia_python_sdk.api.file.v1.file_pb2 import FileEngine
 from begonia_python_sdk.client.models import FileDetails, ReadFileRequest
 from begonia_python_sdk.client.sign import AppAuthSignerImpl, new_gateway_request_from_grpc, GatewayRequest
@@ -54,6 +55,10 @@ class FileAPIGrpcClient(BaseClient):
     def get_file_stub(self) -> FileServiceStub:
         return self.file_stub
 
+    def make_bucket(self, bucket: str) -> str:
+        request = MakeBucketRequest(bucket=bucket, engine=self.engine)
+        _, _ = self.call(request, self.file_stub.MakeBucket)
+        return bucket
     def make_dir(self, bucket: str, folder: str) -> str:
         hash_obj = hashlib.sha256()
         hash_obj.update(b"")
@@ -73,8 +78,8 @@ class FileAPIGrpcClient(BaseClient):
         if file.size > 16 * 1024 * 1024:
             return self.get_large_file(fid, dst, read_request)
         return self.get_file(fid, dst, read_request)
-    
-    def put_file(self, src: Union[str,bytes], bucket: str, key: str) -> str:
+
+    def put_file(self, src: Union[str, bytes], bucket: str, key: str) -> str:
         data = src
         if isinstance(src, str):
             with open(src, "rb") as f:
@@ -83,9 +88,9 @@ class FileAPIGrpcClient(BaseClient):
         hash_obj.update(data)
         sha256 = hash_obj.hexdigest()
         request = UploadFileRequest(key=key, content=data, sha256=sha256, bucket=bucket, engine=self.engine)
-        response,_ = self.call(request, self.file_stub.Upload)
+        response, _ = self.call(request, self.file_stub.Upload)
         return response.uri
-        
+
     def get_file(self, fid: str, dst: str, read_request: ReadFileRequest = None) -> FileDetails:
         request = DownloadRequest(
             file_id=fid,
@@ -105,7 +110,7 @@ class FileAPIGrpcClient(BaseClient):
         with open(dst, "wb") as f:
             f.write(response.data)
         return FileDetails(sha256=sha256, content_type=content_type, size=size,
-                           version=version, bucket=bucket,name=name)
+                           version=version, bucket=bucket, name=name)
 
     def metadata(self, fid: str, read_request: ReadFileRequest = None) -> FileDetails:
         request = FileMetadataRequest(
@@ -119,7 +124,7 @@ class FileAPIGrpcClient(BaseClient):
         response, _ = self.call(request, self.file_stub.Metadata)
 
         return FileDetails(sha256=response.version, content_type=response.content_type, size=response.size,
-                           version=response.version, bucket=response.bucket,name=response.name)
+                           version=response.version, bucket=response.bucket, name=response.name)
 
     def range_download(self, start: int, end: int, fid: str, read_request: ReadFileRequest = None) -> bytes:
         request = DownloadRequest(
@@ -151,7 +156,7 @@ class FileAPIGrpcClient(BaseClient):
             bucket=file.bucket,
             version=file.version,
             name=file.name
-            )
+        )
         # response, server_metadata = self.call(request, self.file_stub.Download)
         # return response.data
 
@@ -160,7 +165,8 @@ if __name__ == "__main__":
     client = FileAPIGrpcClient("127.0.0.1", 12139, "RXS5ncjYwkJKEKKoTjdEagvp1iIIL4mD",
                                "zdlWogPdYGp40ilDBoqoiUkqxeO89etGTbvKPsndsD3ddkhjHlpkkJUj1JprHIpO", FILE_ENGINE_MINIO)
     # file, data = client.get_file("458092175117258752", FILE_ENGINE_MINIO)
-    file = client.get("458092175117258752", "example.pdf")
+    file = client.get("458092175117258752", "example2.pdf")
     print(file)
-    uri=client.put_file("example.pdf", "openkb", "example.pdf")
+    uri = client.put_file("example.pdf", "openkb", "example.pdf")
     print(f"uri:{uri}")
+    client.make_bucket("openrag")

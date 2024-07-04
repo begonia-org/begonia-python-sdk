@@ -7,8 +7,8 @@ AUTH_REQIURED_FIELD_NUMBER: _ClassVar[int]
 auth_reqiured: _descriptor.FieldDescriptor
 METHOD_AUTH_REQIURED_FIELD_NUMBER: _ClassVar[int]
 method_auth_reqiured: _descriptor.FieldDescriptor
-JSONTAG_FIELD_NUMBER: _ClassVar[int]
-jsontag: _descriptor.FieldDescriptor
+UN_UPDATABLE_FIELD_NUMBER: _ClassVar[int]
+un_updatable: _descriptor.FieldDescriptor
 MSG_FIELD_NUMBER: _ClassVar[int]
 msg: _descriptor.FieldDescriptor
 GO_MOD_PKG_FIELD_NUMBER: _ClassVar[int]

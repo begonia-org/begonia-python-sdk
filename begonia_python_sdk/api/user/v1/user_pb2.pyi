@@ -57,7 +57,7 @@ USER_APIKEY_NOT_MATCH_ERR: UserSvrCode
 USER_USERNAME_DUPLICATE_ERR: UserSvrCode
 
 class Users(_message.Message):
-    __slots__ = ("ID", "uid", "owner", "dept", "name", "email", "phone", "password", "avatar", "role", "status", "is_deleted", "created_at", "updated_at", "update_mask")
+    __slots__ = ("ID", "uid", "owner", "dept", "name", "email", "phone", "password", "avatar", "role", "status", "tenant_id", "is_deleted", "created_at", "updated_at", "update_mask")
     ID_FIELD_NUMBER: _ClassVar[int]
     UID_FIELD_NUMBER: _ClassVar[int]
     OWNER_FIELD_NUMBER: _ClassVar[int]
@@ -69,6 +69,7 @@ class Users(_message.Message):
     AVATAR_FIELD_NUMBER: _ClassVar[int]
     ROLE_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
+    TENANT_ID_FIELD_NUMBER: _ClassVar[int]
     IS_DELETED_FIELD_NUMBER: _ClassVar[int]
     CREATED_AT_FIELD_NUMBER: _ClassVar[int]
     UPDATED_AT_FIELD_NUMBER: _ClassVar[int]
@@ -84,11 +85,12 @@ class Users(_message.Message):
     avatar: str
     role: Role
     status: USER_STATUS
+    tenant_id: str
     is_deleted: bool
     created_at: _timestamp_pb2.Timestamp
     updated_at: _timestamp_pb2.Timestamp
     update_mask: _field_mask_pb2.FieldMask
-    def __init__(self, ID: _Optional[int] = ..., uid: _Optional[str] = ..., owner: _Optional[str] = ..., dept: _Optional[str] = ..., name: _Optional[str] = ..., email: _Optional[str] = ..., phone: _Optional[str] = ..., password: _Optional[str] = ..., avatar: _Optional[str] = ..., role: _Optional[_Union[Role, str]] = ..., status: _Optional[_Union[USER_STATUS, str]] = ..., is_deleted: bool = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., update_mask: _Optional[_Union[_field_mask_pb2.FieldMask, _Mapping]] = ...) -> None: ...
+    def __init__(self, ID: _Optional[int] = ..., uid: _Optional[str] = ..., owner: _Optional[str] = ..., dept: _Optional[str] = ..., name: _Optional[str] = ..., email: _Optional[str] = ..., phone: _Optional[str] = ..., password: _Optional[str] = ..., avatar: _Optional[str] = ..., role: _Optional[_Union[Role, str]] = ..., status: _Optional[_Union[USER_STATUS, str]] = ..., tenant_id: _Optional[str] = ..., is_deleted: bool = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., update_mask: _Optional[_Union[_field_mask_pb2.FieldMask, _Mapping]] = ...) -> None: ...
 
 class BasicAuth(_message.Message):
     __slots__ = ("uid", "name", "role", "audience", "issuer", "not_before", "expiration", "issued_at", "is_keep_login", "token")
@@ -115,7 +117,7 @@ class BasicAuth(_message.Message):
     def __init__(self, uid: _Optional[str] = ..., name: _Optional[str] = ..., role: _Optional[_Union[Role, str]] = ..., audience: _Optional[str] = ..., issuer: _Optional[str] = ..., not_before: _Optional[int] = ..., expiration: _Optional[int] = ..., issued_at: _Optional[int] = ..., is_keep_login: bool = ..., token: _Optional[str] = ...) -> None: ...
 
 class PostUserRequest(_message.Message):
-    __slots__ = ("name", "password", "email", "phone", "role", "status", "dept", "owner", "avatar", "update_mask")
+    __slots__ = ("name", "password", "email", "phone", "role", "status", "dept", "owner", "avatar", "tenant_id", "update_mask")
     NAME_FIELD_NUMBER: _ClassVar[int]
     PASSWORD_FIELD_NUMBER: _ClassVar[int]
     EMAIL_FIELD_NUMBER: _ClassVar[int]
@@ -125,6 +127,7 @@ class PostUserRequest(_message.Message):
     DEPT_FIELD_NUMBER: _ClassVar[int]
     OWNER_FIELD_NUMBER: _ClassVar[int]
     AVATAR_FIELD_NUMBER: _ClassVar[int]
+    TENANT_ID_FIELD_NUMBER: _ClassVar[int]
     UPDATE_MASK_FIELD_NUMBER: _ClassVar[int]
     name: str
     password: str
@@ -135,8 +138,9 @@ class PostUserRequest(_message.Message):
     dept: str
     owner: str
     avatar: str
+    tenant_id: str
     update_mask: _field_mask_pb2.FieldMask
-    def __init__(self, name: _Optional[str] = ..., password: _Optional[str] = ..., email: _Optional[str] = ..., phone: _Optional[str] = ..., role: _Optional[_Union[Role, str]] = ..., status: _Optional[_Union[USER_STATUS, str]] = ..., dept: _Optional[str] = ..., owner: _Optional[str] = ..., avatar: _Optional[str] = ..., update_mask: _Optional[_Union[_field_mask_pb2.FieldMask, _Mapping]] = ...) -> None: ...
+    def __init__(self, name: _Optional[str] = ..., password: _Optional[str] = ..., email: _Optional[str] = ..., phone: _Optional[str] = ..., role: _Optional[_Union[Role, str]] = ..., status: _Optional[_Union[USER_STATUS, str]] = ..., dept: _Optional[str] = ..., owner: _Optional[str] = ..., avatar: _Optional[str] = ..., tenant_id: _Optional[str] = ..., update_mask: _Optional[_Union[_field_mask_pb2.FieldMask, _Mapping]] = ...) -> None: ...
 
 class GetUserRequest(_message.Message):
     __slots__ = ("uid",)
