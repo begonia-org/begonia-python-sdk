@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "begonia-python-sdk"
+name = "begonia"
 version = "0.1.0"
 description = ""
 authors = ["vforfreedom <vforfreedom96@gmail.com>"]
