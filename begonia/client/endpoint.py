@@ -7,6 +7,7 @@
 '''
 from typing import List
 from google.protobuf import field_mask_pb2 as _field_mask_pb2
+import grpc
 
 from begonia.client.base import BaseClient
 from begonia.api.endpoint.v1.endpoint_pb2_grpc import EndpointServiceStub
@@ -46,7 +47,6 @@ class EndpointGrpcAPIClient(BaseClient):
         mask = _field_mask_pb2.FieldMask()
         if not name is None:
             mask.paths.append("name")
-            mask.paths.append("service_name")
         if not desc is None:
             mask.paths.append("description")
         if not description_set is None:
@@ -57,7 +57,6 @@ class EndpointGrpcAPIClient(BaseClient):
             mask.paths.append("balance")
         req = EndpointSrvUpdateRequest(unique_key=uid,
                                        name=name,
-                                       service_name=name,
                                        description=desc,
                                        descriptor_set=description_set,
                                        tags=tags,
@@ -70,7 +69,13 @@ class EndpointGrpcAPIClient(BaseClient):
     
     def get(self,id_or_name:str)->DetailsEndpointResponse:
         req = DetailsEndpointRequest(unique_key=id_or_name)
-        rsp,_ = self.call(req,self.endpoint_stub.Get)
+        try:
+            rsp,_ = self.call(req,self.endpoint_stub.Get)
+        except Exception as e:
+            if isinstance(e,grpc.RpcError):
+                if e.code() == grpc.StatusCode.NOT_FOUND:
+                    return None
+            raise e
         return rsp
         
 if __name__ == "__main__":
@@ -81,11 +86,13 @@ if __name__ == "__main__":
         endpoints = [
             EndpointMeta(addr="127.0.0.1:2027", weight=0)
         ]
-        
-        uid = client.register("openrag_endpoint", "openrag server", description_set, endpoints, loadbalance="RR")
-        print(f"endpoint id is {uid}")
-        detail:DetailsEndpointResponse=client.get(uid)
-        print(f"endpoint detail by id is {detail.endpoints.name}")
+        try:
+            uid = client.register("openrag_endpoint", "openrag server", description_set, endpoints, loadbalance="RR")
+            print(f"endpoint id is {uid}")
+            detail:DetailsEndpointResponse=client.get(uid)
+            print(f"endpoint detail by id is {detail.endpoints.name}")
+        except Exception as e:
+            pass
         detail:DetailsEndpointResponse=client.get("openrag_endpoint")
         print(f"endpoint detail by name is {detail.endpoints.key}")
 
