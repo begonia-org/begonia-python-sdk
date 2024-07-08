@@ -10,7 +10,8 @@ from google.protobuf import field_mask_pb2 as _field_mask_pb2
 
 from begonia.client.base import BaseClient
 from begonia.api.endpoint.v1.endpoint_pb2_grpc import EndpointServiceStub
-from begonia.api.endpoint.v1.endpoint_pb2 import EndpointSrvConfig, EndpointSrvUpdateRequest,UpdateEndpointResponse, AddEndpointResponse, EndpointMeta
+from begonia.api.endpoint.v1.endpoint_pb2 import EndpointSrvConfig,DetailsEndpointRequest, EndpointSrvUpdateRequest,\
+     UpdateEndpointResponse, DetailsEndpointResponse, EndpointMeta
 
 
 class EndpointGrpcAPIClient(BaseClient):
@@ -66,8 +67,12 @@ class EndpointGrpcAPIClient(BaseClient):
                                        )
         rsp, _ = self.call(req, self.endpoint_stub.Update)
         return rsp.version
-
-
+    
+    def get(self,id_or_name:str)->DetailsEndpointResponse:
+        req = DetailsEndpointRequest(unique_key=id_or_name)
+        rsp,_ = self.call(req,self.endpoint_stub.Get)
+        return rsp
+        
 if __name__ == "__main__":
     client = EndpointGrpcAPIClient("127.0.0.1", 12139, "ofZQdEs1lS1fjqe0KB3F9WZyLxkpUFm8",
                                    "j54sXN200DmKps6dnV0OdQZdsoECYINahgI855Yi7JCf5ufOUMS39DyxE3D5KOtQ")
@@ -76,5 +81,12 @@ if __name__ == "__main__":
         endpoints = [
             EndpointMeta(addr="127.0.0.1:2027", weight=0)
         ]
+        
         uid = client.register("openrag_endpoint", "openrag server", description_set, endpoints, loadbalance="RR")
         print(f"endpoint id is {uid}")
+        detail:DetailsEndpointResponse=client.get(uid)
+        print(f"endpoint detail by id is {detail.endpoints.name}")
+        detail:DetailsEndpointResponse=client.get("openrag_endpoint")
+        print(f"endpoint detail by name is {detail.endpoints.key}")
+
+        
