@@ -62,7 +62,7 @@ class EndpointGrpcAPIClient(BaseClient):
                                        tags=tags,
                                        balance=loadbalance,
                                        endpoints=endpoints,
-                                       mask=mask
+                                       update_mask=mask
                                        )
         rsp, _ = self.call(req, self.endpoint_stub.Update)
         return rsp.version
