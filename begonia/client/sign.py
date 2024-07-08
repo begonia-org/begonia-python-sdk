@@ -78,6 +78,7 @@ class AppAuthSignerImpl:
 
     def canonical_request(self, request: GatewayRequest, signed_headers: List[str]) -> str:
         body_data = self.request_payload(request)
+        
         hexencode = self.hex_encode_sha256_hash(body_data)
 
         return f"{request.method.upper()}\n{self.canonical_uri(request)}\n{self.canonical_query_string(request)}\n{self.canonical_headers(request, signed_headers)}\n{';'.join(signed_headers)}\n{hexencode}"
@@ -161,9 +162,13 @@ class AppAuthSignerImpl:
         request.headers.set(HEADER_X_ACCESS_KEY, self.key)
 
         signed_headers = self.signed_headers(request)
+        # print(f"signed_headers: {signed_headers}")
         canonical_request = self.canonical_request(request, signed_headers)
+        # print(f"canonical_request: {canonical_request}")
         string_to_sign_str = self.string_to_sign(canonical_request, t)
+        # print(f"string_to_sign_str: {string_to_sign_str}")
         signature_str = self.sign_string_to_sign(string_to_sign_str, self.secret.encode('utf-8'))
+        # print(f"signature_str: {signature_str}")
 
         return signature_str
 
@@ -191,6 +196,7 @@ def new_gateway_request_from_grpc(message: Any, full_method: str, host: str,
     try:
         payload = b"{}"
         payload = json.dumps(MessageToDict(message),separators=(',', ':'),ensure_ascii=False).encode()
+        # print(f"payload: {payload}")
         header = RequestHeader()
         if metadata:
             for k, v in metadata:
