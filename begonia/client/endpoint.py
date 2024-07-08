@@ -83,17 +83,20 @@ if __name__ == "__main__":
                                    "j54sXN200DmKps6dnV0OdQZdsoECYINahgI855Yi7JCf5ufOUMS39DyxE3D5KOtQ")
     with open("/data/work/begonia-org/openRAG/openrag/protos/openrag.bin", "rb") as f:
         description_set = f.read()
-        endpoints = [
-            EndpointMeta(addr="127.0.0.1:2027", weight=0)
-        ]
-        try:
-            uid = client.register("openrag_endpoint", "openrag server", description_set, endpoints, loadbalance="RR")
-            print(f"endpoint id is {uid}")
-            detail:DetailsEndpointResponse=client.get(uid)
-            print(f"endpoint detail by id is {detail.endpoints.name}")
-        except Exception as e:
-            pass
+        # endpoints = [
+        #     EndpointMeta(addr="127.0.0.1:2027", weight=0)
+        # ]
+        # try:
+        #     uid = client.register("openrag_endpoint", "openrag server", description_set, endpoints, loadbalance="RR")
+        #     print(f"endpoint id is {uid}")
+        #     detail:DetailsEndpointResponse=client.get(uid)
+        #     print(f"endpoint detail by id is {detail.endpoints.name}")
+        # except Exception as e:
+        #     print(e)
+        #     pass
         detail:DetailsEndpointResponse=client.get("openrag_endpoint")
         print(f"endpoint detail by name is {detail.endpoints.key}")
+        client.update(detail.endpoints.key,description_set=description_set)
+
 
         

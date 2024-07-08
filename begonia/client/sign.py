@@ -14,7 +14,9 @@ import json
 from datetime import datetime, UTC
 import logging
 from typing import Any, Dict, List, Optional, Tuple
-from google.protobuf.json_format import MessageToDict
+from google.protobuf.json_format import MessageToDict,MessageToJson
+from google.protobuf.text_format import MessageToString
+from google.protobuf import message as _message
 
 from urllib.parse import urlparse, quote, urlencode, parse_qs
 from urllib.parse import ParseResult
@@ -191,11 +193,12 @@ def new_gateway_request_from_http(req: requests.Request) -> GatewayRequest:
     return GatewayRequest(headers, io.BytesIO(payload), req.method, req.url, url_info.netloc)
 
 
-def new_gateway_request_from_grpc(message: Any, full_method: str, host: str,
+def new_gateway_request_from_grpc(message: _message.Message, full_method: str, host: str,
                                   metadata: Tuple[Tuple[str, str]] = None) -> GatewayRequest:
     try:
         payload = b"{}"
-        payload = json.dumps(MessageToDict(message),separators=(',', ':'),ensure_ascii=False).encode()
+        payload = json.dumps(MessageToDict(message,preserving_proto_field_name=True),separators=(',', ':'),indent=None,ensure_ascii=False,sort_keys=True).encode()
+        # payload = MessageToJson(message,indent=None,ensure_ascii=False,preserving_proto_field_name=True).encode()
         # print(f"payload: {payload}")
         header = RequestHeader()
         if metadata:
