@@ -10,7 +10,7 @@
 from logging import Handler
 from multiprocessing.context import BaseContext
 import sys
-from typing import Callable, Dict, Optional, TextIO, Union
+from typing import Callable, Optional, TextIO, Union,Dict
 import grpc
 import grpc._server
 from httpx import request
@@ -43,10 +43,10 @@ def warp(func):
         metadata = context
         if isinstance(context, grpc.ServicerContext):
             metadata = dict(context.invocation_metadata())
-        
         identity = metadata.get("x-identity", "")
         request_id = metadata.get("x-request-id", "")
         method = metadata.get("method", "")
+        # method = ctx._rpc_event.call_details.method.decode("utf-8")
 
         bound_logger = self.opt(depth=2).bind(method=method, identity=identity, request_id=request_id)
         return func(self, bound_logger, message)
@@ -88,8 +88,8 @@ class BegoniaLogger():
     def success(self, bound_logger, message: Union[str, dict]) -> None:
         bound_logger.success(message)
 
-    def opt(self, **kwargs) -> None:
-        return self.logger.opt(**kwargs)
+    def opt(self, **kwargs):
+        return BegoniaLogger(self.logger.opt(**kwargs))
 
 
 if __name__ == "__main__":

@@ -77,16 +77,21 @@ class ExceptionInterceptor(grpc.ServerInterceptor):
             except Exception as e:
                 metadata = dict(ctx.invocation_metadata())
                 metadata["method"] = ctx._rpc_event.call_details.method
-                log.opt(depth=1).error(metadata, str(e))
+                log.opt(depth=1).error(metadata, traceback.format_exc())
+                # 在这里可以进行日志记录等操作
+                # print(f"Exception caught in interceptor: {e}")
                 tb = traceback.extract_tb(e.__traceback__)
                 filename, line, fn, text = tb[-1]  # 获取最后一条堆栈信息
                 stack = "".join(traceback.format_exception(type(e), e, e.__traceback__))
+                # 转换异常为 gRPC 的状态码和详情
+                # context: grpc.ServicerContext = handler_call_details.invocation_metadata
                 code = grpc.StatusCode.INTERNAL.value[0]
                 msg = "Internal server error"
                 client_msg = ""
 
                 if resolver:
                     code, msg, client_msg = resolver(e)
+                # print(f"code:{code},line:{line}")
                 details: web_pb2.Errors = web_pb2.Errors(
                     code=get_rsp_code(code),
                     message=msg,
@@ -97,6 +102,9 @@ class ExceptionInterceptor(grpc.ServerInterceptor):
                     fn=str(fn))
                 d = any_pb2.Any()
                 d.Pack(details)
+                # print(f"状态码:{code},详情:{d}")
+                # ctx.set_code(code)
+                # ctx.set_details(d.SerializeToString())
                 status = status_pb2.Status(code=code, message=msg,details=[d])
                 ctx.abort_with_status(rpc_status.to_status(status))
                 
@@ -106,4 +114,30 @@ class ExceptionInterceptor(grpc.ServerInterceptor):
         rpc: grpc.RpcMethodHandler = continuation(handler_call_details)
         # setattr(rpc,"unary_unary",self.exception(rpc.unary_unary))
         return rpc
-
+        # try:
+        #     return continuation(handler_call_details)
+        # except Exception as e:
+        #     metadata = dict(handler_call_details.invocation_metadata)
+        #     metadata["method"] = handler_call_details.method
+        #     self.log.error(metadata, str(e))
+        #     # 在这里可以进行日志记录等操作
+        #     # print(f"Exception caught in interceptor: {e}")
+        #     tb = traceback.extract_tb(e.__traceback__)
+        #     filename, line, func, text = tb[-1]  # 获取最后一条堆栈信息
+        #     stack = "".join(traceback.format_exception(type(e), e, e.__traceback__))
+        #     # 转换异常为 gRPC 的状态码和详情
+        #     # context: grpc.ServicerContext = handler_call_details.invocation_metadata
+        #     code = grpc.StatusCode.INTERNAL
+        #     msg = "Internal server error"
+        #     if self.resolver:
+        #         code, msg, client_msg = self.resolver(e)
+        #     details: web_pb2.Errors = web_pb2.Errors(
+        #         code=code,
+        #         message=msg,
+        #         to_client_message=client_msg,
+        #         stack=stack,
+        #         file=filename,
+        #         line=line,
+        #         func=func)
+        #     return _unary_unary_rpc_terminator(code, details)
+        # context.abort(code, details)
