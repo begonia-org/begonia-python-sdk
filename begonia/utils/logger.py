@@ -22,7 +22,7 @@ logger.remove()
 logger.add(
     sys.stdout,
     colorize=True,
-    format="<green>{time}</green> <cyan>{file}</cyan>:<cyan>{line}</cyan> <level>{message}</level> <cyan>{extra.get('method','')}</cyan> <cyan>{extra.get('identity',"")}</cyan> <cyan>{extra.get('request_id','')}</cyan>",
+    format="<green>{time}</green> <cyan>{file}</cyan>:<cyan>{line}</cyan> <level>{message}</level> <cyan>{extra[method]}</cyan> <cyan>{extra[identity]}</cyan> <cyan>{extra[request_id]}</cyan>",
 )
 # chat_logger = logger.bind(name="chat")
 # es_logger = logger.bind(name="elasticsearch")
