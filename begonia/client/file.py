@@ -59,6 +59,7 @@ class FileAPIGrpcClient(BaseClient):
         request = MakeBucketRequest(bucket=bucket, engine=self.engine)
         _, _ = self.call(request, self.file_stub.MakeBucket)
         return bucket
+
     def make_dir(self, bucket: str, folder: str) -> str:
         hash_obj = hashlib.sha256()
         hash_obj.update(b"")
@@ -162,11 +163,12 @@ class FileAPIGrpcClient(BaseClient):
 
 
 if __name__ == "__main__":
-    client = FileAPIGrpcClient("127.0.0.1", 12139, "RXS5ncjYwkJKEKKoTjdEagvp1iIIL4mD",
-                               "zdlWogPdYGp40ilDBoqoiUkqxeO89etGTbvKPsndsD3ddkhjHlpkkJUj1JprHIpO", FILE_ENGINE_MINIO)
-    # file, data = client.get_file("458092175117258752", FILE_ENGINE_MINIO)
-    file = client.get("458092175117258752", "example2.pdf")
-    print(file)
+    client = FileAPIGrpcClient("127.0.0.1", 12139, "ofZQdEs1lS1fjqe0KB3F9WZyLxkpUFm8",
+                               "j54sXN200DmKps6dnV0OdQZdsoECYINahgI855Yi7JCf5ufOUMS39DyxE3D5KOtQ", FILE_ENGINE_MINIO)
+    # # file, data = client.get_file("458092175117258752", FILE_ENGINE_MINIO)
+    # file = client.get("458092175117258752", "example2.pdf")
+    # print(file)
+    client.make_bucket("openkb")
     uri = client.put_file("example.pdf", "openkb", "example.pdf")
     print(f"uri:{uri}")
     client.make_bucket("openrag")

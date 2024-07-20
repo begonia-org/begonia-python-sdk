@@ -10,7 +10,7 @@
 from logging import Handler
 from multiprocessing.context import BaseContext
 import sys
-from typing import Callable, Optional, TextIO, Union,Dict
+from typing import Callable, Optional, TextIO, Union, Dict
 import grpc
 import grpc._server
 from httpx import request
@@ -38,17 +38,22 @@ logger.add(
 
 
 def warp(func):
-    def wrapper(self, context: Union[grpc.ServicerContext,Dict[str,str]], message: Union[str, dict]) -> None:
+    def wrapper(self, message: Union[str, dict], context: Union[grpc.ServicerContext, Dict[str, str]] = None) -> None:
         # metadata = dict(ctx.invocation_metadata())
         metadata = context
-        if isinstance(context, grpc.ServicerContext):
-            metadata = dict(context.invocation_metadata())
-        identity = metadata.get("x-identity", "")
-        request_id = metadata.get("x-request-id", "")
-        method = metadata.get("method", "")
-        # method = ctx._rpc_event.call_details.method.decode("utf-8")
+        bound_logger = self.opt(depth=2)
+        identity = ""
+        request_id = ""
+        method = ""
+        if metadata:
+            if isinstance(context, grpc.ServicerContext):
+                metadata = dict(context.invocation_metadata())
+            identity = metadata.get("x-identity", "")
+            request_id = metadata.get("x-request-id", "")
+            method = metadata.get("method", "")
+            # method = ctx._rpc_event.call_details.method.decode("utf-8")
 
-        bound_logger = self.opt(depth=2).bind(method=method, identity=identity, request_id=request_id)
+        bound_logger = bound_logger.bind(method=method, identity=identity, request_id=request_id)
         return func(self, bound_logger, message)
     return wrapper
 
@@ -56,6 +61,20 @@ def warp(func):
 class BegoniaLogger():
     def __init__(self, log) -> None:
         self.logger = log
+
+    def with_context(self, context: Union[grpc.ServicerContext, Dict[str, str]]):
+        metadata = context
+        identity = ""
+        request_id = ""
+        method = ""
+        if metadata:
+            if isinstance(context, grpc.ServicerContext):
+                metadata = dict(context.invocation_metadata())
+            identity = metadata.get("x-identity", "")
+            request_id = metadata.get("x-request-id", "")
+            method = metadata.get("method", "")
+            # method = ctx._rpc_event.call_details.method.decode("utf-8")
+        return self.opt(method=method, identity=identity, request_id=request_id)
 
     @warp
     def info(self, bound_logger, message: Union[str, dict]) -> None:
@@ -94,4 +113,5 @@ class BegoniaLogger():
 
 if __name__ == "__main__":
     log = BegoniaLogger(logger)
-    log.info({"x-identity": "123344", "x-request-id": "eeddfddd"}, "hello")
+    log.info("hello", {"x-identity": "123344", "x-request-id": "eeddfddd"})
+    log.info("hello")
