@@ -77,7 +77,7 @@ class ExceptionInterceptor(grpc.ServerInterceptor):
             except Exception as e:
                 metadata = dict(ctx.invocation_metadata())
                 metadata["method"] = ctx._rpc_event.call_details.method
-                log.opt(depth=1).error(metadata, traceback.format_exc())
+                log.opt(depth=1).error(traceback.format_exc(),metadata)
                 # 在这里可以进行日志记录等操作
                 # print(f"Exception caught in interceptor: {e}")
                 tb = traceback.extract_tb(e.__traceback__)
