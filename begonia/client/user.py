@@ -8,8 +8,8 @@
 
 
 import grpc
-from begonia.api.user.v1.user_pb2_grpc import UserServiceStub
-from begonia.api.user.v1.user_pb2 import GetUserRequest, Users
+from begonia.api.v1.user_pb2_grpc import UserServiceStub
+from begonia.api.v1.user_pb2 import GetUserRequest, Users
 from begonia.client.base import BaseClient
 from begonia.client.sign import AppAuthSignerImpl
 

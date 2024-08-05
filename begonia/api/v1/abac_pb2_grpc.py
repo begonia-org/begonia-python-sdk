@@ -15,32 +15,32 @@ class ABACServiceStub(object):
             channel: A grpc.Channel.
         """
         self.Auth = channel.unary_unary(
-                '/begonia.org.go.access.control.api.v1.ABACService/Auth',
+                '/begonia.org.sdk.ABACService/Auth',
                 request_serializer=abac__pb2.AccessContext.SerializeToString,
                 response_deserializer=abac__pb2.AccessResponse.FromString,
                 )
         self.PolicyPut = channel.unary_unary(
-                '/begonia.org.go.access.control.api.v1.ABACService/PolicyPut',
+                '/begonia.org.sdk.ABACService/PolicyPut',
                 request_serializer=abac__pb2.PutPolicyRequest.SerializeToString,
                 response_deserializer=abac__pb2.PutPolicyResponse.FromString,
                 )
         self.PolicyPatch = channel.unary_unary(
-                '/begonia.org.go.access.control.api.v1.ABACService/PolicyPatch',
+                '/begonia.org.sdk.ABACService/PolicyPatch',
                 request_serializer=abac__pb2.PutPolicyRequest.SerializeToString,
                 response_deserializer=abac__pb2.PatchPolicyResponse.FromString,
                 )
         self.PolicyDelete = channel.unary_unary(
-                '/begonia.org.go.access.control.api.v1.ABACService/PolicyDelete',
+                '/begonia.org.sdk.ABACService/PolicyDelete',
                 request_serializer=abac__pb2.PolicyRequest.SerializeToString,
                 response_deserializer=abac__pb2.Policy.FromString,
                 )
         self.PolicyGet = channel.unary_unary(
-                '/begonia.org.go.access.control.api.v1.ABACService/PolicyGet',
+                '/begonia.org.sdk.ABACService/PolicyGet',
                 request_serializer=abac__pb2.PolicyRequest.SerializeToString,
                 response_deserializer=abac__pb2.Policy.FromString,
                 )
         self.PolicyList = channel.unary_unary(
-                '/begonia.org.go.access.control.api.v1.ABACService/PolicyList',
+                '/begonia.org.sdk.ABACService/PolicyList',
                 request_serializer=abac__pb2.Policy.SerializeToString,
                 response_deserializer=abac__pb2.Policy.FromString,
                 )
@@ -120,7 +120,7 @@ def add_ABACServiceServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'begonia.org.go.access.control.api.v1.ABACService', rpc_method_handlers)
+            'begonia.org.sdk.ABACService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -139,7 +139,7 @@ class ABACService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/begonia.org.go.access.control.api.v1.ABACService/Auth',
+        return grpc.experimental.unary_unary(request, target, '/begonia.org.sdk.ABACService/Auth',
             abac__pb2.AccessContext.SerializeToString,
             abac__pb2.AccessResponse.FromString,
             options, channel_credentials,
@@ -156,7 +156,7 @@ class ABACService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/begonia.org.go.access.control.api.v1.ABACService/PolicyPut',
+        return grpc.experimental.unary_unary(request, target, '/begonia.org.sdk.ABACService/PolicyPut',
             abac__pb2.PutPolicyRequest.SerializeToString,
             abac__pb2.PutPolicyResponse.FromString,
             options, channel_credentials,
@@ -173,7 +173,7 @@ class ABACService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/begonia.org.go.access.control.api.v1.ABACService/PolicyPatch',
+        return grpc.experimental.unary_unary(request, target, '/begonia.org.sdk.ABACService/PolicyPatch',
             abac__pb2.PutPolicyRequest.SerializeToString,
             abac__pb2.PatchPolicyResponse.FromString,
             options, channel_credentials,
@@ -190,7 +190,7 @@ class ABACService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/begonia.org.go.access.control.api.v1.ABACService/PolicyDelete',
+        return grpc.experimental.unary_unary(request, target, '/begonia.org.sdk.ABACService/PolicyDelete',
             abac__pb2.PolicyRequest.SerializeToString,
             abac__pb2.Policy.FromString,
             options, channel_credentials,
@@ -207,7 +207,7 @@ class ABACService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/begonia.org.go.access.control.api.v1.ABACService/PolicyGet',
+        return grpc.experimental.unary_unary(request, target, '/begonia.org.sdk.ABACService/PolicyGet',
             abac__pb2.PolicyRequest.SerializeToString,
             abac__pb2.Policy.FromString,
             options, channel_credentials,
@@ -224,7 +224,7 @@ class ABACService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/begonia.org.go.access.control.api.v1.ABACService/PolicyList',
+        return grpc.experimental.unary_unary(request, target, '/begonia.org.sdk.ABACService/PolicyList',
             abac__pb2.Policy.SerializeToString,
             abac__pb2.Policy.FromString,
             options, channel_credentials,

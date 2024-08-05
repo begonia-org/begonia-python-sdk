@@ -6,7 +6,8 @@ from . import authentication_pb2 as authentication__pb2
 
 
 class AuthServiceStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """option (.begonia.api.v1.auth_reqiured)=true;
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -32,7 +33,8 @@ class AuthServiceStub(object):
 
 
 class AuthServiceServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """option (.begonia.api.v1.auth_reqiured)=true;
+    """
 
     def Login(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -78,7 +80,8 @@ def add_AuthServiceServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class AuthService(object):
-    """Missing associated documentation comment in .proto file."""
+    """option (.begonia.api.v1.auth_reqiured)=true;
+    """
 
     @staticmethod
     def Login(request,

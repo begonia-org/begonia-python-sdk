@@ -10,8 +10,8 @@ from google.protobuf import field_mask_pb2 as _field_mask_pb2
 import grpc
 
 from begonia.client.base import BaseClient
-from begonia.api.endpoint.v1.endpoint_pb2_grpc import EndpointServiceStub
-from begonia.api.endpoint.v1.endpoint_pb2 import EndpointSrvConfig,DetailsEndpointRequest, EndpointSrvUpdateRequest,\
+from begonia.api.v1.endpoint_pb2_grpc import EndpointServiceStub
+from begonia.api.v1.endpoint_pb2 import EndpointSrvConfig,DetailsEndpointRequest, EndpointSrvUpdateRequest,\
      UpdateEndpointResponse, DetailsEndpointResponse, EndpointMeta
 
 

@@ -15,11 +15,11 @@ from urllib import response
 import grpc
 from google.api import httpbody_pb2 as httpbody
 from begonia.client.base import BaseClient
-from begonia.api.file.v1.file_pb2_grpc import FileServiceStub
-from begonia.api.file.v1.file_pb2 import DownloadRequest, \
+from begonia.api.v1.file_pb2_grpc import FileServiceStub
+from begonia.api.v1.file_pb2 import DownloadRequest, \
     DownloadResponse, UploadFileRequest, FileMetadataRequest, FileMetadataResponse, \
     MakeBucketRequest, MakeBucketResponse
-from begonia.api.file.v1.file_pb2 import FileEngine
+from begonia.api.v1.file_pb2 import FileEngine
 from begonia.client.models import FileDetails, ReadFileRequest
 from begonia.client.sign import AppAuthSignerImpl, new_gateway_request_from_grpc, GatewayRequest
 # const (

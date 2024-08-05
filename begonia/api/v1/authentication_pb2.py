@@ -18,18 +18,18 @@ from . import user_pb2 as user__pb2
 from begonia.api.v1 import options_pb2 as begonia_dot_api_dot_v1_dot_options__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14\x61uthentication.proto\x12\x0f\x62\x65gonia.org.sdk\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/descriptor.proto\x1a\nuser.proto\x1a\x1c\x62\x65gonia/api/v1/options.proto\"S\n\x0fLoginAPIRequest\x12\x0c\n\x04\x61uth\x18\x01 \x01(\t\x12\x0c\n\x04seed\x18\x02 \x01(\x03\x12$\n\ris_keep_login\x18\x03 \x01(\x08R\ris_keep_login\"\x12\n\x10LogoutAPIRequest\"\x13\n\x11LogoutAPIResponse\"G\n\x10LoginAPIResponse\x12$\n\x04user\x18\x01 \x01(\x0b\x32\x16.begonia.org.sdk.Users\x12\r\n\x05token\x18\x02 \x01(\t\"!\n\x11\x41\x63\x63ountAPIRequest\x12\x0c\n\x04uids\x18\x01 \x03(\t\";\n\x12\x41\x63\x63ountAPIResponse\x12%\n\x05users\x18\x01 \x03(\x0b\x32\x16.begonia.org.sdk.Users\"@\n\x08UserAuth\x12\x18\n\x07\x61\x63\x63ount\x18\x01 \x01(\tR\x07\x61\x63\x63ount\x12\x1a\n\x08password\x18\x02 \x01(\tR\x08password\"\x8e\x01\n\x12RegsiterAPIRequest\x12\x0c\n\x04\x61uth\x18\x01 \x01(\t\x12>\n\x03\x65xt\x18\x03 \x03(\x0b\x32,.begonia.org.sdk.RegsiterAPIRequest.ExtEntryR\x03\x65xt\x1a*\n\x08\x45xtEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\"\n\x13RegsiterAPIResponse\x12\x0b\n\x03msg\x18\x01 \x01(\t\"\"\n\x11\x41uthLogAPIRequest\x12\r\n\x05token\x18\x01 \x01(\t\"%\n\x08\x41uthSeed\x12\x0c\n\x04seed\x18\x01 \x01(\x03\x12\x0b\n\x03key\x18\x02 \x01(\t\"4\n\x12\x41uthLogAPIResponse\x12\x0b\n\x03msg\x18\x01 \x01(\t\x12\x11\n\ttimestamp\x18\x02 \x01(\t2\x84\x03\n\x0b\x41uthService\x12k\n\x05Login\x12 .begonia.org.sdk.LoginAPIRequest\x1a!.begonia.org.sdk.LoginAPIResponse\"\x1d\x82\xd3\xe4\x93\x02\x17\"\x12/api/v1/auth/login:\x01*\x12l\n\x06Logout\x12!.begonia.org.sdk.LogoutAPIRequest\x1a\".begonia.org.sdk.LogoutAPIResponse\"\x1b\x82\xd3\xe4\x93\x02\x15*\x13/api/v1/auth/logout\x12u\n\x08\x41uthSeed\x12\".begonia.org.sdk.AuthLogAPIRequest\x1a#.begonia.org.sdk.AuthLogAPIResponse\" \x82\xd3\xe4\x93\x02\x1a\x12\x18/api/v1/auth/log/{token}\x1a#\x88\xb7\x18\x01\xb2\xb7\x18\x1b\x62\x65gonia.api.v1.HttpResponseB+Z)github.com/begonia-org/go-sdk/api/user/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14\x61uthentication.proto\x12\x0f\x62\x65gonia.org.sdk\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/descriptor.proto\x1a\nuser.proto\x1a\x1c\x62\x65gonia/api/v1/options.proto\"S\n\x0fLoginAPIRequest\x12\x0c\n\x04\x61uth\x18\x01 \x01(\t\x12\x0c\n\x04seed\x18\x02 \x01(\x03\x12$\n\ris_keep_login\x18\x03 \x01(\x08R\ris_keep_login\"\x12\n\x10LogoutAPIRequest\"\x13\n\x11LogoutAPIResponse\"G\n\x10LoginAPIResponse\x12$\n\x04user\x18\x01 \x01(\x0b\x32\x16.begonia.org.sdk.Users\x12\r\n\x05token\x18\x02 \x01(\t\"!\n\x11\x41\x63\x63ountAPIRequest\x12\x0c\n\x04uids\x18\x01 \x03(\t\";\n\x12\x41\x63\x63ountAPIResponse\x12%\n\x05users\x18\x01 \x03(\x0b\x32\x16.begonia.org.sdk.Users\"@\n\x08UserAuth\x12\x18\n\x07\x61\x63\x63ount\x18\x01 \x01(\tR\x07\x61\x63\x63ount\x12\x1a\n\x08password\x18\x02 \x01(\tR\x08password\"\x8e\x01\n\x12RegsiterAPIRequest\x12\x0c\n\x04\x61uth\x18\x01 \x01(\t\x12>\n\x03\x65xt\x18\x03 \x03(\x0b\x32,.begonia.org.sdk.RegsiterAPIRequest.ExtEntryR\x03\x65xt\x1a*\n\x08\x45xtEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\"\n\x13RegsiterAPIResponse\x12\x0b\n\x03msg\x18\x01 \x01(\t\"\"\n\x11\x41uthLogAPIRequest\x12\r\n\x05token\x18\x01 \x01(\t\"%\n\x08\x41uthSeed\x12\x0c\n\x04seed\x18\x01 \x01(\x03\x12\x0b\n\x03key\x18\x02 \x01(\t\"4\n\x12\x41uthLogAPIResponse\x12\x0b\n\x03msg\x18\x01 \x01(\t\x12\x11\n\ttimestamp\x18\x02 \x01(\t2\x80\x03\n\x0b\x41uthService\x12k\n\x05Login\x12 .begonia.org.sdk.LoginAPIRequest\x1a!.begonia.org.sdk.LoginAPIResponse\"\x1d\x82\xd3\xe4\x93\x02\x17\"\x12/api/v1/auth/login:\x01*\x12l\n\x06Logout\x12!.begonia.org.sdk.LogoutAPIRequest\x1a\".begonia.org.sdk.LogoutAPIResponse\"\x1b\x82\xd3\xe4\x93\x02\x15*\x13/api/v1/auth/logout\x12u\n\x08\x41uthSeed\x12\".begonia.org.sdk.AuthLogAPIRequest\x1a#.begonia.org.sdk.AuthLogAPIResponse\" \x82\xd3\xe4\x93\x02\x1a\x12\x18/api/v1/auth/log/{token}\x1a\x1f\xb2\xb7\x18\x1b\x62\x65gonia.api.v1.HttpResponseB&Z$github.com/begonia-org/go-sdk/api/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'authentication_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['DESCRIPTOR']._options = None
-  _globals['DESCRIPTOR']._serialized_options = b'Z)github.com/begonia-org/go-sdk/api/user/v1'
+  _globals['DESCRIPTOR']._serialized_options = b'Z$github.com/begonia-org/go-sdk/api/v1'
   _globals['_REGSITERAPIREQUEST_EXTENTRY']._options = None
   _globals['_REGSITERAPIREQUEST_EXTENTRY']._serialized_options = b'8\001'
   _globals['_AUTHSERVICE']._options = None
-  _globals['_AUTHSERVICE']._serialized_options = b'\210\267\030\001\262\267\030\033begonia.api.v1.HttpResponse'
+  _globals['_AUTHSERVICE']._serialized_options = b'\262\267\030\033begonia.api.v1.HttpResponse'
   _globals['_AUTHSERVICE'].methods_by_name['Login']._options = None
   _globals['_AUTHSERVICE'].methods_by_name['Login']._serialized_options = b'\202\323\344\223\002\027\"\022/api/v1/auth/login:\001*'
   _globals['_AUTHSERVICE'].methods_by_name['Logout']._options = None
@@ -63,5 +63,5 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_AUTHLOGAPIRESPONSE']._serialized_start=764
   _globals['_AUTHLOGAPIRESPONSE']._serialized_end=816
   _globals['_AUTHSERVICE']._serialized_start=819
-  _globals['_AUTHSERVICE']._serialized_end=1207
+  _globals['_AUTHSERVICE']._serialized_end=1203
 # @@protoc_insertion_point(module_scope)

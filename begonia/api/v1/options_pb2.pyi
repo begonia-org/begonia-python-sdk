@@ -17,3 +17,5 @@ GO_MOD_PKG_FIELD_NUMBER: _ClassVar[int]
 go_mod_pkg: _descriptor.FieldDescriptor
 HTTP_RESPONSE_FIELD_NUMBER: _ClassVar[int]
 http_response: _descriptor.FieldDescriptor
+DONT_USE_HTTP_RESPONSE_FIELD_NUMBER: _ClassVar[int]
+dont_use_http_response: _descriptor.FieldDescriptor

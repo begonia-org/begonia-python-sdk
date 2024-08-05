@@ -22,23 +22,3 @@ class Resource(_message.Message):
     created_at: _timestamp_pb2.Timestamp
     updated_at: _timestamp_pb2.Timestamp
     def __init__(self, ID: _Optional[int] = ..., ResourceKey: _Optional[str] = ..., ResourceName: _Optional[str] = ..., ResourceTable: _Optional[str] = ..., uid: _Optional[str] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
-
-class Files(_message.Message):
-    __slots__ = ("ID", "name", "uri", "sha", "author", "is_deleted", "created_at", "updated_at")
-    ID_FIELD_NUMBER: _ClassVar[int]
-    NAME_FIELD_NUMBER: _ClassVar[int]
-    URI_FIELD_NUMBER: _ClassVar[int]
-    SHA_FIELD_NUMBER: _ClassVar[int]
-    AUTHOR_FIELD_NUMBER: _ClassVar[int]
-    IS_DELETED_FIELD_NUMBER: _ClassVar[int]
-    CREATED_AT_FIELD_NUMBER: _ClassVar[int]
-    UPDATED_AT_FIELD_NUMBER: _ClassVar[int]
-    ID: int
-    name: str
-    uri: str
-    sha: str
-    author: str
-    is_deleted: bool
-    created_at: _timestamp_pb2.Timestamp
-    updated_at: _timestamp_pb2.Timestamp
-    def __init__(self, ID: _Optional[int] = ..., name: _Optional[str] = ..., uri: _Optional[str] = ..., sha: _Optional[str] = ..., author: _Optional[str] = ..., is_deleted: bool = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...

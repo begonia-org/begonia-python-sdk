@@ -12,10 +12,21 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
+class ExampleEnum(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    EX_UNKNOWN: _ClassVar[ExampleEnum]
+    EX_STARTED: _ClassVar[ExampleEnum]
+    EX_RUNNING: _ClassVar[ExampleEnum]
+    EX_STOPPED: _ClassVar[ExampleEnum]
+
 class EnumAllow(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = ()
     ALLOW: _ClassVar[EnumAllow]
     DENY: _ClassVar[EnumAllow]
+EX_UNKNOWN: ExampleEnum
+EX_STARTED: ExampleEnum
+EX_RUNNING: ExampleEnum
+EX_STOPPED: ExampleEnum
 ALLOW: EnumAllow
 DENY: EnumAllow
 
@@ -48,7 +59,7 @@ class HelloSubRequest(_message.Message):
     def __init__(self, sub_msg: _Optional[str] = ..., sub_name: _Optional[str] = ..., sub_age: _Optional[int] = ..., update_mask: _Optional[_Union[_field_mask_pb2.FieldMask, _Mapping]] = ...) -> None: ...
 
 class HelloRequestWithValidator(_message.Message):
-    __slots__ = ("msg", "name", "age", "sub", "subs", "update_mask", "sub_map", "sub_map2")
+    __slots__ = ("msg", "name", "age", "age2", "float_num", "bool_data", "bytes_data", "sub", "sub2", "subs", "update_mask", "sub_map", "sub_map2", "ex_enum", "ex_enums", "strs", "enum_map", "enum_map2")
     class SubMapEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -63,23 +74,57 @@ class HelloRequestWithValidator(_message.Message):
         key: str
         value: str
         def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
+    class EnumMapEntry(_message.Message):
+        __slots__ = ("key", "value")
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: ExampleEnum
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[ExampleEnum, str]] = ...) -> None: ...
+    class EnumMap2Entry(_message.Message):
+        __slots__ = ("key", "value")
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: ExampleEnum
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[ExampleEnum, str]] = ...) -> None: ...
     MSG_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     AGE_FIELD_NUMBER: _ClassVar[int]
+    AGE2_FIELD_NUMBER: _ClassVar[int]
+    FLOAT_NUM_FIELD_NUMBER: _ClassVar[int]
+    BOOL_DATA_FIELD_NUMBER: _ClassVar[int]
+    BYTES_DATA_FIELD_NUMBER: _ClassVar[int]
     SUB_FIELD_NUMBER: _ClassVar[int]
+    SUB2_FIELD_NUMBER: _ClassVar[int]
     SUBS_FIELD_NUMBER: _ClassVar[int]
     UPDATE_MASK_FIELD_NUMBER: _ClassVar[int]
     SUB_MAP_FIELD_NUMBER: _ClassVar[int]
     SUB_MAP2_FIELD_NUMBER: _ClassVar[int]
+    EX_ENUM_FIELD_NUMBER: _ClassVar[int]
+    EX_ENUMS_FIELD_NUMBER: _ClassVar[int]
+    STRS_FIELD_NUMBER: _ClassVar[int]
+    ENUM_MAP_FIELD_NUMBER: _ClassVar[int]
+    ENUM_MAP2_FIELD_NUMBER: _ClassVar[int]
     msg: str
     name: str
     age: int
+    age2: int
+    float_num: float
+    bool_data: bool
+    bytes_data: bytes
     sub: HelloSubRequest
+    sub2: HelloRequest
     subs: _containers.RepeatedCompositeFieldContainer[HelloSubRequest]
     update_mask: _field_mask_pb2.FieldMask
     sub_map: _containers.MessageMap[str, HelloSubRequest]
     sub_map2: _containers.ScalarMap[str, str]
-    def __init__(self, msg: _Optional[str] = ..., name: _Optional[str] = ..., age: _Optional[int] = ..., sub: _Optional[_Union[HelloSubRequest, _Mapping]] = ..., subs: _Optional[_Iterable[_Union[HelloSubRequest, _Mapping]]] = ..., update_mask: _Optional[_Union[_field_mask_pb2.FieldMask, _Mapping]] = ..., sub_map: _Optional[_Mapping[str, HelloSubRequest]] = ..., sub_map2: _Optional[_Mapping[str, str]] = ...) -> None: ...
+    ex_enum: ExampleEnum
+    ex_enums: _containers.RepeatedScalarFieldContainer[ExampleEnum]
+    strs: _containers.RepeatedScalarFieldContainer[str]
+    enum_map: _containers.ScalarMap[str, ExampleEnum]
+    enum_map2: _containers.ScalarMap[str, ExampleEnum]
+    def __init__(self, msg: _Optional[str] = ..., name: _Optional[str] = ..., age: _Optional[int] = ..., age2: _Optional[int] = ..., float_num: _Optional[float] = ..., bool_data: bool = ..., bytes_data: _Optional[bytes] = ..., sub: _Optional[_Union[HelloSubRequest, _Mapping]] = ..., sub2: _Optional[_Union[HelloRequest, _Mapping]] = ..., subs: _Optional[_Iterable[_Union[HelloSubRequest, _Mapping]]] = ..., update_mask: _Optional[_Union[_field_mask_pb2.FieldMask, _Mapping]] = ..., sub_map: _Optional[_Mapping[str, HelloSubRequest]] = ..., sub_map2: _Optional[_Mapping[str, str]] = ..., ex_enum: _Optional[_Union[ExampleEnum, str]] = ..., ex_enums: _Optional[_Iterable[_Union[ExampleEnum, str]]] = ..., strs: _Optional[_Iterable[str]] = ..., enum_map: _Optional[_Mapping[str, ExampleEnum]] = ..., enum_map2: _Optional[_Mapping[str, ExampleEnum]] = ...) -> None: ...
 
 class HelloReply(_message.Message):
     __slots__ = ("message", "name")
