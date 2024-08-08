@@ -64,7 +64,7 @@ def get_rsp_code(rpc_code: int) -> int:
         return grpc.StatusCode.UNKNOWN.value[0]
 
 
-class ExceptionInterceptor(grpc.ServerInterceptor):
+class ExceptionInterceptor:
     def __init__(self, resolver: Callable = None) -> None:
         super().__init__()
         self.resolver: Callable = resolver
