@@ -1,3 +1,3 @@
 [submodule "begonia/protos"]
 	path = begonia/protos
-	url = git@github.com:begonia-org/protos.git
+	url = https://github.com/begonia-org/protos.git
